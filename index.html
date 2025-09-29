@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Shorts Hider - User Script</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #282828 0%, #0f0f0f 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .logo svg {
+            color: #FF0000;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        .card {
+            background: #282828;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #FF0000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            background: #FF0000;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #e0e0e0;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        .code-container {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+            border: 1px solid #404040;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .code-title {
+            color: #065FD4;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: #065FD4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: #0448a3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 95, 212, 0.3);
+        }
+
+        .copy-btn.copied {
+            background: #00A300;
+        }
+
+        pre {
+            background: transparent;
+            overflow-x: auto;
+            padding: 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #a9b7c6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #FF0000;
+        }
+
+        .feature h3 {
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature p {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .install-link {
+            display: inline-block;
+            background: #FF0000;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .install-link:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+        }
+
+        .warning {
+            background: #4a3000;
+            border-left: 4px solid #ffa500;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .warning p {
+            color: #ffcc80;
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #404040;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor">
+                    <path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33c-.77-.32-1.2-.5-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zM10 14.65v-5.3L15 12l-5 2.65z"/>
+                </svg>
+            </div>
+            <h1>YouTube Shorts Hider</h1>
+            <p class="subtitle">Oculte automaticamente a seção de YouTube Shorts para uma experiência mais limpa e focada</p>
+        </header>
+
+        <div class="card">
+            <h2><span class="step-number">1</span> Instale o Tampermonkey</h2>
+            <p>Primeiro, você precisa instalar uma extensão de gerenciamento de user scripts no seu navegador:</p>
+            <ul>
+                <li><strong>Chrome/Edge:</strong> <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" style="color: #065FD4;">Tampermonkey na Chrome Web Store</a></li>
+                <li><strong>Firefox:</strong> <a href="https://addons.mozilla.org/pt-BR/firefox/addon/tampermonkey/" target="_blank" style="color: #065FD4;">Tampermonkey para Firefox</a></li>
+                <li><strong>Safari:</strong> <a href="https://apps.apple.com/app/tampermonkey/id1482490089" target="_blank" style="color: #065FD4;">Tampermonkey na App Store</a></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><span class="step-number">2</span> Instale o Script</h2>
+            <p>Após instalar o Tampermonkey, clique no botão abaixo ou copie o código manualmente:</p>
+            
+            <a href="youtube-shorts-hider.user.js" class="install-link">📥 Instalar Script Automaticamente</a>
+            
+            <div class="warning">
+                <p><strong>⚠️ Nota:</strong> Ao clicar no link acima, o Tampermonkey deve detectar automaticamente o script e perguntar se você deseja instalá-lo. Se isso não acontecer, copie o código abaixo manualmente.</p>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">youtube-shorts-hider.user.js</span>
+                    <button class="copy-btn" onclick="copyCode()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copiar Código
+                    </button>
+                </div>
+                <pre><code id="user-script"></code></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="step-number">3</span> Configure o Tampermonkey</h2>
+            <p><strong>Importante:</strong> Para que o script funcione corretamente, você precisa ativar uma configuração no Tampermonkey:</p>
+            <ul>
+                <li>Clique no ícone do <strong>Tampermonkey</strong> na barra de extensões do navegador</li>
+                <li>Vá em <strong>Configurações</strong> (Settings) ou clique com botão direito no ícone e selecione "Options"</li>
+                <li>Na aba <strong>Geral</strong> ou <strong>Security</strong>, encontre a opção:</li>
+            </ul>
+            
+            <div class="warning">
+                <p><strong>⚙️ "Allow User Scripts"</strong> ou <strong>"Permitir User Scripts"</strong></p>
+                <p style="margin-top: 10px;">Certifique-se de que esta opção está <strong>ATIVADA</strong> (toggle azul). Sem isso, o script não conseguirá ocultar os Shorts do YouTube.</p>
+            </div>
+
+            <p style="margin-top: 20px;"><em>Nota: Esta configuração permite que scripts como este modifiquem páginas web. É seguro ativar para scripts confiáveis como este.</em></p>
+        </div>
+
+        <div class="card">
+            <h2><span class="step-number">4</span> Como Usar</h2>
+            <p>Após instalar o script e configurar o Tampermonkey:</p>
+            <ul>
+                <li>Acesse o YouTube normalmente</li>
+                <li>A seção de Shorts será automaticamente ocultada</li>
+                <li>Um painel de controle aparecerá no canto inferior direito da página</li>
+                <li>Use o toggle para ativar/desativar a ocultação quando desejar</li>
+                <li>Suas preferências serão salvas automaticamente</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>✨ Funcionalidades</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>🎯 Detecção Automática</h3>
+                    <p>Detecta e oculta automaticamente todas as seções de Shorts no YouTube</p>
+                </div>
+                <div class="feature">
+                    <h3>⚡ Tempo Real</h3>
+                    <p>Funciona dinamicamente, mesmo quando você navega pelo site sem recarregar</p>
+                </div>
+                <div class="feature">
+                    <h3>🎛️ Controle Fácil</h3>
+                    <p>Toggle simples e intuitivo para ativar/desativar quando quiser</p>
+                </div>
+                <div class="feature">
+                    <h3>💾 Persistente</h3>
+                    <p>Suas preferências são salvas e mantidas entre sessões</p>
+                </div>
+                <div class="feature">
+                    <h3>🎨 Design Limpo</h3>
+                    <p>Interface minimalista que segue o estilo visual do YouTube</p>
+                </div>
+                <div class="feature">
+                    <h3>🚀 Alto Desempenho</h3>
+                    <p>Otimizado para não impactar a performance do YouTube</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Desenvolvido para proporcionar uma experiência mais focada no YouTube</p>
+        </footer>
+    </div>
+
+    <script>
+        async function loadScript() {
+            try {
+                const response = await fetch('youtube-shorts-hider.user.js');
+                const scriptContent = await response.text();
+                document.getElementById('user-script').textContent = scriptContent;
+            } catch (error) {
+                document.getElementById('user-script').textContent = 'Erro ao carregar o script. Por favor, recarregue a página.';
+            }
+        }
+
+        function copyCode() {
+            const code = document.getElementById('user-script').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Copiado!
+                `;
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        loadScript();
+    </script>
+</body>
+</html>
